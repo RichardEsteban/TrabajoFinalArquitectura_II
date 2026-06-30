@@ -7,26 +7,6 @@
  *   NOP, LOAD, ADD, SUB, AND, OR, XOR, LW, SW,
  *   BEQ, BNE, SUBI, J, PUSH, POP, HLT
  *
- * Restricciones prácticas:
- *   - No existe MOV; una copia de Rb -> Ra se logra con
- *     LOAD Ra, 0 ; ADD Ra, Rb  (porque R0 está cableado a 0).
- *     Pero como LOAD es inmediato, usamos ADD Ra, Rb con Ra = 0 y
- *     luego almacenamos:  LOAD Rt, 0 ; ADD Rt, Rb   (Rt queda con Rb)
- *     Cuando sólo necesitamos "devolver" el valor en R1, basta con
- *     usar R1 como acumulador desde el inicio.
- *   - No existe MUL. Para multiplicar se usa una subrutina
- *     MUL_R1R2 implementada con sumas repetidas y la pila para
- *     preservar el contador y el producto parcial.
- *   - No existe CALL/RET explícitos. Las subrutinas se invocan
- *     con `J ETIQUETA` y, como el ISA no tiene retorno
- *     automático, el flujo continúa linealmente. Para "volver"
- *     se guarda la dirección de retorno en la pila antes del salto
- *     y la subrutina la recupera con POP hacia R7 y salta con
- *     `J R7` (esta es una convención documentada en §4.2 del
- *     informe).
- *   - Para incrementar por 1 se usa `SUBI R, -1` (aprovecha el
- *     inmediato con signo de 6 bits, rango [-32, 31]).
- *   - Para decrementar por 1 se usa `SUBI R, 1`.
  * --------------------------------------------------------------------
  */
 
@@ -83,7 +63,7 @@ FACT_STEP:
     LOAD  R7, 0
     ADD   R7, R3       ; R7 <- "dirección de retorno" simulada
     ; (Truco: saltamos a FACT_RET directamente, sin leer pila,
-    ; porque我们知道 dónde retornar en este flujo lineal.)
+    ; porque dónde retornar en este flujo lineal.)
     J     FACT_RET
 
 FACT_DONE:

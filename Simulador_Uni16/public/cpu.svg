@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#g)"/>
+  <!-- Chip pattern -->
+  <rect x="8" y="8" width="16" height="16" rx="3" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="1.2"/>
+  <!-- Pins -->
+  <rect x="11" y="3" width="2" height="3" rx="1" fill="white" opacity="0.7"/>
+  <rect x="15" y="3" width="2" height="3" rx="1" fill="white" opacity="0.7"/>
+  <rect x="19" y="3" width="2" height="3" rx="1" fill="white" opacity="0.7"/>
+  <rect x="11" y="26" width="2" height="3" rx="1" fill="white" opacity="0.7"/>
+  <rect x="15" y="26" width="2" height="3" rx="1" fill="white" opacity="0.7"/>
+  <rect x="19" y="26" width="2" height="3" rx="1" fill="white" opacity="0.7"/>
+  <rect x="3" y="11" width="3" height="2" rx="1" fill="white" opacity="0.7"/>
+  <rect x="3" y="15" width="3" height="2" rx="1" fill="white" opacity="0.7"/>
+  <rect x="3" y="19" width="3" height="2" rx="1" fill="white" opacity="0.7"/>
+  <rect x="26" y="11" width="3" height="2" rx="1" fill="white" opacity="0.7"/>
+  <rect x="26" y="15" width="3" height="2" rx="1" fill="white" opacity="0.7"/>
+  <rect x="26" y="19" width="3" height="2" rx="1" fill="white" opacity="0.7"/>
+  <!-- Core letters -->
+  <text x="16" y="20" text-anchor="middle" fill="white" font-family="monospace" font-size="9" font-weight="700">U16</text>
+</svg>

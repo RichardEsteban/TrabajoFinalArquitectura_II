@@ -15,12 +15,12 @@
 export const EXAMPLE_SUM = `; ===============================================================
 ;  Ejemplo 1: Suma simple
 ;  Calcula a + b.  R5 = a, R6 = b.  Resultado en R1.
-;  Modifica los valores de R5 y R6 a tu gusto.
+;  Reemplaza el valor de R5 y R6 con los de tu eleccion.
 ; ===============================================================
 
 MAIN:
-    LOAD  R5, 5        ; a = 5  <-- cambia este valor
-    LOAD  R6, 3        ; b = 3  <-- cambia este valor
+    LOAD  R5, 0        ; a = <-- reemplaza 0 por el valor de a
+    LOAD  R6, 0        ; b = <-- reemplaza 0 por el valor de b
     ADD   R1, R0
     ADD   R1, R5
     ADD   R1, R6       ; R1 = a + b
@@ -30,11 +30,11 @@ MAIN:
 export const EXAMPLE_FACTORIAL = `; ===============================================================
 ;  Ejemplo 2: Factorial iterativo
 ;  Calcula a! .  R5 = a.  Resultado en R1.
-;  Modifica el valor de R5 a tu gusto.
+;  Reemplaza el valor de R5 con el de tu eleccion.
 ; ===============================================================
 
 MAIN:
-    LOAD  R5, 4        ; a = 4  <-- cambia este valor
+    LOAD  R5, 0        ; a = <-- reemplaza 0 por el valor de a
     ADD   R1, R0
     ADD   R1, R5        ; R1 = N
     LOAD  R2, 1         ; resultado
@@ -66,11 +66,11 @@ FACT_DONE:
 export const EXAMPLE_FIBONACCI = `; ===============================================================
 ;  Ejemplo 3: Fibonacci iterativo
 ;  Calcula fib(a) .  R5 = a.  Resultado en R1.
-;  Modifica el valor de R5 a tu gusto.
+;  Reemplaza el valor de R5 con el de tu eleccion.
 ; ===============================================================
 
 MAIN:
-    LOAD  R5, 6        ; a = 6  <-- cambia este valor
+    LOAD  R5, 0        ; a = <-- reemplaza 0 por el valor de a
     ADD   R1, R0
     ADD   R1, R5        ; R1 = N
     LOAD  R2, 0         ; a = 0  (fib(0))
@@ -108,14 +108,14 @@ export const EXAMPLE_FULL = `; =================================================
 ;  Ejemplo 4: Programa completo
 ;  Calcula factorial(a) + fib(b).
 ;  R5 = a, R6 = b.  Resultado en R1.
-;  Modifica los valores de R5 y R6 a tu gusto.
+;  Reemplaza los valores de R5 y R6 con los de tu eleccion.
 ;
 ;  Resultado esperado: factorial(a) + fib(b)
 ; ===============================================================
 
 MAIN:
-    LOAD  R5, 4        ; a = 4  <-- cambia este valor
-    LOAD  R6, 4        ; b = 4  <-- cambia este valor
+    LOAD  R5, 0        ; a = <-- reemplaza 0 por el valor de a
+    LOAD  R6, 0        ; b = <-- reemplaza 0 por el valor de b
 
     ; -------- FACTORIAL --------
     ADD   R1, R0

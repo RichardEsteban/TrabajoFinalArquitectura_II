@@ -76,10 +76,10 @@ export const ControlPanel: React.FC = () => {
           defaultValue="sum"
           onChange={(e) => loadExample(e.target.value as 'sum' | 'factorial' | 'fibonacci' | 'full')}
         >
-          <option value="sum">Suma (5 + 3)</option>
-          <option value="factorial">Factorial (5!)</option>
-          <option value="fibonacci">Fibonacci (fib(6))</option>
-          <option value="full">Completo (4! + fib(4))</option>
+          <option value="sum">Suma (a + b)</option>
+          <option value="factorial">Factorial (a!)</option>
+          <option value="fibonacci">Fibonacci (fib(a))</option>
+          <option value="full">Completo (factorial(a) + fib(b))</option>
         </select>
       </div>
 

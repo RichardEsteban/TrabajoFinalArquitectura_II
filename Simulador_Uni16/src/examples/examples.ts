@@ -32,25 +32,27 @@ export const EXAMPLE_FACTORIAL = `; ============================================
 ;  Calcula a! .  R5 = a.  Resultado en R1.
 ;  Reemplaza el valor de R5 con el de tu eleccion.
 ;
-;  Ejemplo: si a = 5, resultado esperado = 120 (1*2*3*4*5)
+;  Tabla de referencia:
+;    0! = 1   1! = 1   2! = 2   3! = 6   4! = 24  5! = 120
 ; ===============================================================
 
 MAIN:
     LOAD  R5, 0        ; a = <-- reemplaza 0 por el valor de a
     ADD   R1, R0
-    ADD   R1, R5        ; R1 = N (contador externo)
+    ADD   R1, R5        ; R1 = N
     LOAD  R2, 1         ; R2 = 1 (resultado acumulado)
+    BEQ   FACT_DONE    ; si N == 0 -> 0! = 1 ya esta en R2
 
 FACT_LOOP:
-    BEQ   FACT_DONE    ; si N == 0 -> fin
+    BEQ   FACT_DONE    ; si N == 1 -> factorial listo, R2 tiene el resultado
     ADD   R3, R0
-    ADD   R3, R1        ; R3 = N (contador interno = N)
-    ADD   R4, R0        ; R4 = 0 (acumulador para la multiplicacion)
+    ADD   R3, R1        ; R3 = N (contador para multiplicacion)
+    ADD   R4, R0        ; R4 = 0 (acumulador de la suma)
 
 MULT_LOOP:
-    BEQ   MULT_DONE    ; si contador interno == 0 -> fin mult
+    BEQ   MULT_DONE    ; si contador == 0 -> fin
     ADD   R4, R2        ; acumulador += resultado
-    SUBI  R3, 1         ; contador interno--
+    SUBI  R3, 1         ; contador--
     J     MULT_LOOP
 
 MULT_DONE:
@@ -124,19 +126,20 @@ MAIN:
 
     ; -------- FACTORIAL --------
     ADD   R1, R0
-    ADD   R1, R5        ; R1 = N (contador externo)
+    ADD   R1, R5        ; R1 = N
     LOAD  R2, 1         ; R2 = 1 (resultado acumulado)
+    BEQ   FACT_DONE    ; si N == 0 -> 0! = 1 ya esta en R2
 
 FACT_LOOP:
-    BEQ   FACT_DONE
+    BEQ   FACT_DONE    ; si N == 1 -> factorial listo
     ADD   R3, R0
-    ADD   R3, R1        ; R3 = N (contador interno = N)
-    ADD   R4, R0        ; R4 = 0 (acumulador para la multiplicacion)
+    ADD   R3, R1        ; R3 = N (contador para multiplicacion)
+    ADD   R4, R0        ; R4 = 0 (acumulador de la suma)
 
 MULT_LOOP:
-    BEQ   MULT_DONE
+    BEQ   MULT_DONE    ; si contador == 0 -> fin
     ADD   R4, R2        ; acumulador += resultado
-    SUBI  R3, 1         ; contador interno--
+    SUBI  R3, 1         ; contador--
     J     MULT_LOOP
 
 MULT_DONE:

@@ -1,136 +1,157 @@
 # Simulador UNI-16
 
-Simulador didáctico de la CPU **UNI-16**, una arquitectura RISC de 16 bits diseñada para el curso de *Arquitectura de Computadoras II* de la **Universidad Nacional de Ingeniería (UNI)**.
+Simulador didáctico de la CPU **UNI-16**, una arquitectura RISC de 16 bits diseñada para el curso de *Arquitectura de Computadoras II* de la *Universidad Nacional de Ingeniería (UNI)*.
 
 ---
 
-## Características
+## Guía paso a paso para ejecutarlo
 
-- ✅ Ensamblador de dos pasadas con resolución de etiquetas y mensajes de error pedagógicos.
-- ✅ Motor de CPU que implementa el ciclo Fetch → Decode → Execute → Writeback.
-- ✅ 16 instrucciones: `NOP LOAD ADD SUB AND OR XOR LW SW BEQ BNE SUBI J PUSH POP HLT`.
-- ✅ 8 registros de 16 bits (R0 cableado a 0).
-- ✅ 256 palabras de memoria de programa + 256 de memoria de datos.
-- ✅ Pila de 64 entradas con SP post-incremento.
-- ✅ 4 flags: Z (zero), C (carry), N (negative), V (overflow).
-- ✅ UI con React 18 + TypeScript + Vite. Tema oscuro, paneles re-render optimizados.
-- ✅ Ejecución paso a paso, continua con velocidad ajustable, reset suave y total.
+### Paso 1 · Instalar Node.js (incluye npm)
 
----
+Necesitas **Node.js 18 o superior** (recomendado 20 LTS o 22 LTS).
 
-## Inicio rápido
+1. Ve a **<https://nodejs.org/en/download>** y descarga el instalador **LTS** de tu sistema operativo (Windows `.msi`, macOS `.pkg` o binario Linux).
+
+Verifica la instalación abriendo una terminal nueva:
 
 ```bash
-cd uni16-simulator
+node -v    # debe decir v18.x o superior
+npm -v     # debe decir 9.x o superior
+```
+
+---
+
+### Paso 2 · Obtener el proyecto
+
+**Si lo tienes como ZIP:** descomprímelo en una carpeta.
+
+**Si lo clonas con Git:**
+```bash
+git clone https://github.com/RichardEsteban/TrabajoFinalArquitectura_II.git
+```
+
+---
+
+### Paso 3 · Instalar dependencias
+
+Abre la terminal **dentro de la carpeta `Simulador_Uni16/`** (la que contiene el `package.json`) y ejecuta:
+
+```bash
 npm install
+```
+
+Esto descarga `react`, `vite`, `vitest`, etc. en una subcarpeta `node_modules/`. Tarda de 30 segundos a unos minutos.
+
+> 💡 Tip para llegar a la carpeta correcta desde el Explorador de Windows: abre la carpeta `Simulador_Uni16/`, escribe `cmd` en la barra de dirección y presiona Enter. Eso abre una terminal ya en esa ruta.
+
+---
+
+### Paso 4 · Arrancar el simulador
+
+En la misma terminal, todavía **dentro de `Simulador_Uni16/`**, ejecuta:
+
+```bash
 npm run dev
 ```
 
-Abre el navegador en `http://localhost:5173`. Verás un programa de ejemplo ("Suma 5+3") precargado. Pulsa **⛏ Compilar** y luego **▶▶ Run** para verlo ejecutar.
+Verás algo así:
 
-### Otros comandos
+```
+  VITE v5.4.x  ready in 320 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.x.x:5173/
+```
+
+> ⚠️ No cierres esta terminal mientras estés usando el simulador, es la que sirve la app.
+
+---
+
+### Paso 5 · Abrir en el navegador
+
+Abre **<http://localhost:5173/>** y verás el simulador con un programa precargado ("Suma 5+3"):
+
+1. Pulsa **⛏ Compilar**.
+2. Pulsa **▶▶ Run** para ejecutar.
+3. Para detener el servidor: vuelve a la terminal del Paso 4 y presiona `Ctrl + C`.
+
+---
+
+## Comandos útiles
+
+Todos se ejecutan **desde la carpeta `Simulador_Uni16/`**:
 
 ```bash
-npm run build      # genera el bundle de producción en dist/
-npm run preview    # sirve el bundle de producción localmente
-npm run test       # ejecuta los tests con Vitest
-npm run lint       # corre ESLint sobre el código
+npm run dev       # servidor de desarrollo (hot-reload)
+npm run build     # genera el bundle de producción en dist/
+npm run preview   # sirve el bundle de dist/ localmente
+npm run test      # ejecuta los tests unitarios con Vitest
 ```
 
 ---
 
-## Estructura del proyecto
+## Problemas frecuentes
+
+| Problema | Solución |
+|---|---|
+| `'node' no se reconoce` | Node no está instalado o no está en el PATH. Vuelve al Paso 1 y reinstala; **cierra y abre una terminal nueva**. |
+| `EACCES` en Linux/macOS al hacer `npm install` | No uses `sudo`. Configura un prefijo propio: `npm config set prefix '~/.npm-global'` y reintenta. |
+| `EADDRINUSE :::5173` | El puerto está ocupado. Mata el proceso o usa otro: `npm run dev -- --port 5174`. |
+| Pantalla en blanco en el navegador | Borra caché y reinstala: `rm -rf node_modules .vite && npm install && npm run dev`. |
+| `npm install` corre en una carpeta equivocada | Asegúrate de estar **dentro de `Simulador_Uni16/`** (la que tiene `package.json`). Si haces `npm install` en la carpeta padre te dirá que no encuentra el `package.json`. |
+
+---
+
+## Estructura
 
 ```
-uni16-simulator/
+Simulador_Uni16/
 ├── package.json
 ├── tsconfig.json
 ├── vite.config.ts
 ├── index.html
-├── public/
-│   └── cpu.svg
-└── src/
-    ├── main.tsx                       # Bootstrap React
-    ├── App.tsx                        # Layout principal
-    │
-    ├── core/                          # Capa de dominio (sin React)
-    │   ├── isa.ts                     # Definición de la ISA, opcodes, registros
-    │   ├── state.ts                   # Modelos de snapshot (CPU, UI, trace)
-    │   ├── assembler.ts               # Ensamblador de 2 pasadas + lexer + parser
-    │   └── cpu.ts                     # Motor Fetch-Decode-Execute-Writeback
-    │
-    ├── context/                       # Capa de estado
-    │   └── CPUContext.tsx             # useReducer + CPUProvider + useCPU()
-    │
-    ├── components/                    # Capa de presentación
-    │   ├── StatusBar.tsx              # Estado del CPU en la parte superior
-    │   ├── Editor.tsx                 # Editor de código fuente .asm
-    │   ├── CodeView.tsx               # Listado fuente → código máquina
-    │   ├── ControlPanel.tsx           # Botones Compilar / Step / Run / Reset
-    │   ├── RegisterView.tsx           # Visor de R0..R7 + flags
-    │   ├── MemoryView.tsx             # Visor de memoria de programa y datos
-    │   ├── StackView.tsx              # Visor de pila con TOP destacado
-    │   └── Console.tsx                # Trazas de ejecución
-    │
-    ├── examples/
-    │   └── examples.ts                # Programas .asm de demostración
-    │
-    └── styles/
-        └── index.css                  # Tema oscuro, paneles, badges de flags
+├── public/cpu.svg
+├── src/
+│   ├── App.tsx, main.tsx
+│   ├── core/        ← ISA, ensamblador, CPU (sin React)
+│   ├── context/     ← Estado global (useReducer)
+│   ├── components/  ← UI: Editor, Registers, Memory, Stack, Console...
+│   ├── examples/examples.ts   ← Programas de ejemplo (.asm)
+│   └── styles/index.css
 ```
-
----
 
 ## ISA de referencia rápida
 
 | Mnemónico | Opcode | Formato | Operación |
 |---|---|---|---|
-| NOP   | 0x0 | –        | Sin operación |
-| LOAD  | 0x1 | `Rd, imm6` | `R[rd] ← sext(imm6)` |
-| ADD   | 0x2 | `Rd, Rs`  | `R[rd] ← R[rd] + R[rs]` |
-| SUB   | 0x3 | `Rd, Rs`  | `R[rd] ← R[rd] - R[rs]` |
-| AND   | 0x4 | `Rd, Rs`  | `R[rd] ← R[rd] AND R[rs]` |
-| OR    | 0x5 | `Rd, Rs`  | `R[rd] ← R[rd] OR R[rs]` |
-| XOR   | 0x6 | `Rd, Rs`  | `R[rd] ← R[rd] XOR R[rs]` |
-| LW    | 0x7 | `Rd, Rs`  | `R[rd] ← MEM[R[rs]]` |
-| SW    | 0x8 | `Rd, Rs`  | `MEM[R[rs]] ← R[rd]` |
-| BEQ   | 0x9 | `addr12`  | Si Z=1, `PC ← addr` |
-| BNE   | 0xA | `addr12`  | Si Z=0, `PC ← addr` |
-| SUBI  | 0xB | `Rd, imm6`| `R[rd] ← R[rd] - sext(imm6)` |
-| J     | 0xC | `addr12`  | `PC ← addr` |
-| PUSH  | 0xD | `Rd`      | `Stack[SP++] ← R[rd]` |
-| POP   | 0xE | `Rd`      | `R[rd] ← Stack[--SP]` |
-| HLT   | 0xF | –        | Detener CPU |
+| `NOP`  | `0x0` | –         | Sin operación |
+| `LOAD` | `0x1` | `Rd, imm6` | `R[rd] ← sext(imm6)` |
+| `ADD`  | `0x2` | `Rd, Rs`   | `R[rd] ← R[rd] + R[rs]` |
+| `SUB`  | `0x3` | `Rd, Rs`   | `R[rd] ← R[rd] - R[rs]` |
+| `AND`  | `0x4` | `Rd, Rs`   | `R[rd] ← R[rd] AND R[rs]` |
+| `OR`   | `0x5` | `Rd, Rs`   | `R[rd] ← R[rd] OR R[rs]` |
+| `XOR`  | `0x6` | `Rd, Rs`   | `R[rd] ← R[rd] XOR R[rs]` |
+| `LW`   | `0x7` | `Rd, Rs`   | `R[rd] ← MEM[R[rs]]` |
+| `SW`   | `0x8` | `Rd, Rs`   | `MEM[R[rs]] ← R[rd]` |
+| `BEQ`  | `0x9` | `addr12`   | Si Z=1, `PC ← addr` |
+| `BNE`  | `0xA` | `addr12`   | Si Z=0, `PC ← addr` |
+| `SUBI` | `0xB` | `Rd, imm6` | `R[rd] ← R[rd] - sext(imm6)` |
+| `J`    | `0xC` | `addr12`   | `PC ← addr` |
+| `PUSH` | `0xD` | `Rd`       | `Stack[SP++] ← R[rd]` |
+| `POP`  | `0xE` | `Rd`       | `R[rd] ← Stack[--SP]` |
+| `HLT`  | `0xF` | –          | Detener CPU |
 
-**Inmediato:** 6 bits con signo (rango `[-32, +31]`). Para incrementar por 1, usar `SUBI R, -1`.
-
-**Sin CALL/RET en esta ISA.** Las subrutinas se invocan con `J etiqueta`. La pila sirve para preservar registros entre secciones.
-
----
-
-## Cómo usar el simulador
-
-1. **Edita** código en el panel izquierdo (`.asm`).
-2. **Compila** con `Ctrl+Enter` o el botón ⛏.
-3. **Step** ejecuta una instrucción; observa cómo cambian registros, flags y la traza.
-4. **Run** ejecuta en bucle hasta encontrar `HLT`. Ajusta la velocidad con el slider.
-5. **Reset** mantiene el programa; **Reset Total** lo borra.
-
-### Atajos de teclado
-
-| Atajo | Acción |
-|---|---|
-| `Ctrl+Enter` (o `Cmd+Enter` en Mac) | Compilar |
-| (Hover sobre línea con error en el gutter) | Ver mensaje completo |
-
----
+**Inmediato:** 6 bits con signo (rango `[-32, +31]`). Para `+1`, usar `SUBI R, -1`. Sin `CALL`/`RET`: las subrutinas se invocan con `J etiqueta` y la pila sirve para preservar registros.
 
 ## Tests
 
-Los tests viven al lado de cada archivo (`*.test.ts`). Por ejemplo:
+```bash
+npm run test
+```
+
+Ejemplo de test:
 
 ```ts
-// src/core/assembler.test.ts
 import { describe, it, expect } from 'vitest';
 import { assemble } from './assembler';
 
@@ -143,12 +164,3 @@ describe('assembler', () => {
   });
 });
 ```
-
-Para ejecutarlos:
-
-```bash
-npm run test
-```
-
----
-

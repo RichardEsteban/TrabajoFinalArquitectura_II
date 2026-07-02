@@ -31,29 +31,31 @@ export const EXAMPLE_FACTORIAL = `; ============================================
 ;  Ejemplo 2: Factorial iterativo
 ;  Calcula a! .  R5 = a.  Resultado en R1.
 ;  Reemplaza el valor de R5 con el de tu eleccion.
+;
+;  Ejemplo: si a = 5, resultado esperado = 120 (1*2*3*4*5)
 ; ===============================================================
 
 MAIN:
     LOAD  R5, 0        ; a = <-- reemplaza 0 por el valor de a
     ADD   R1, R0
-    ADD   R1, R5        ; R1 = N
-    LOAD  R2, 1         ; resultado
+    ADD   R1, R5        ; R1 = N (contador externo)
+    LOAD  R2, 1         ; R2 = 1 (resultado acumulado)
 
 FACT_LOOP:
     BEQ   FACT_DONE    ; si N == 0 -> fin
-    LOAD  R3, 0
-    ADD   R4, R0
-    ADD   R4, R1        ; R4 = contador
+    ADD   R3, R0
+    ADD   R3, R1        ; R3 = N (contador interno = N)
+    ADD   R4, R0        ; R4 = 0 (acumulador para la multiplicacion)
 
 MULT_LOOP:
-    BEQ   MULT_DONE    ; si contador == 0 -> fin mult
-    ADD   R3, R2        ; acumulador += resultado
-    SUBI  R4, 1         ; contador--
+    BEQ   MULT_DONE    ; si contador interno == 0 -> fin mult
+    ADD   R4, R2        ; acumulador += resultado
+    SUBI  R3, 1         ; contador interno--
     J     MULT_LOOP
 
 MULT_DONE:
     ADD   R2, R0
-    ADD   R2, R3        ; resultado = acumulador
+    ADD   R2, R4        ; resultado = acumulador
     SUBI  R1, 1         ; N--
     J     FACT_LOOP
 
@@ -110,7 +112,7 @@ export const EXAMPLE_FULL = `; =================================================
 ;  R5 = a, R6 = b.  Resultado en R1.
 ;  Reemplaza los valores de R5 y R6 con los de tu eleccion.
 ;
-;  Resultado esperado: factorial(a) + fib(b)
+;  Ejemplo: a=5, b=3 -> 5! + fib(3) = 120 + 2 = 122
 ; ===============================================================
 
 MAIN:
@@ -119,25 +121,25 @@ MAIN:
 
     ; -------- FACTORIAL --------
     ADD   R1, R0
-    ADD   R1, R5        ; N = a
-    LOAD  R2, 1         ; resultado
+    ADD   R1, R5        ; R1 = N (contador externo)
+    LOAD  R2, 1         ; R2 = 1 (resultado acumulado)
 
 FACT_LOOP:
     BEQ   FACT_DONE
-    LOAD  R3, 0
-    ADD   R4, R0
-    ADD   R4, R1        ; R4 = contador
+    ADD   R3, R0
+    ADD   R3, R1        ; R3 = N (contador interno = N)
+    ADD   R4, R0        ; R4 = 0 (acumulador para la multiplicacion)
 
 MULT_LOOP:
     BEQ   MULT_DONE
-    ADD   R3, R2
-    SUBI  R4, 1
+    ADD   R4, R2        ; acumulador += resultado
+    SUBI  R3, 1         ; contador interno--
     J     MULT_LOOP
 
 MULT_DONE:
     ADD   R2, R0
-    ADD   R2, R3
-    SUBI  R1, 1
+    ADD   R2, R4        ; resultado = acumulador
+    SUBI  R1, 1         ; N--
     J     FACT_LOOP
 
 FACT_DONE:

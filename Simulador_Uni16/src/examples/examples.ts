@@ -69,6 +69,9 @@ export const EXAMPLE_FIBONACCI = `; ============================================
 ;  Ejemplo 3: Fibonacci iterativo
 ;  Calcula fib(a) .  R5 = a.  Resultado en R1.
 ;  Reemplaza el valor de R5 con el de tu eleccion.
+;
+;  Tabla de referencia:
+;    fib(0)=0  fib(1)=1  fib(2)=1  fib(3)=2  fib(4)=3  fib(5)=5
 ; ===============================================================
 
 MAIN:
@@ -80,7 +83,7 @@ MAIN:
     BEQ   FIB_BASE0     ; si N == 0 -> fib(0) = 0
 
 FIB_LOOP:
-    BEQ   FIB_DONE      ; si N == 0 -> fin
+    BEQ   FIB_DONE      ; si N == 1 -> fib(1) = 1 ya esta en R2
 
     ADD   R4, R0
     ADD   R4, R2
@@ -153,7 +156,7 @@ FACT_DONE:
     BEQ   FIB_BASE0
 
 FIB_LOOP:
-    BEQ   FIB_DONE
+    BEQ   FIB_DONE      ; si N == 1 -> fib(1) = 1 ya esta en R2
     ADD   R4, R0
     ADD   R4, R2
     ADD   R4, R3        ; R4 = a + b

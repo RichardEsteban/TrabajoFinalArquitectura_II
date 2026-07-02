@@ -1,0 +1,10 @@
+# Dependencias
+Simulador_Uni16/node_modules/
+
+# Build
+Simulador_Uni16/dist/
+Simulador_Uni16/.vite/
+
+# OS
+.DS_Store
+Thumbs.db

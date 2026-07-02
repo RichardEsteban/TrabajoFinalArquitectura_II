@@ -82,11 +82,9 @@ MAIN:
     ADD   R1, R5        ; R1 = N
     LOAD  R2, 0         ; a = 0  (fib(0))
     LOAD  R3, 1         ; b = 1  (fib(1))
-    BEQ   FIB_BASE0     ; si N == 0 -> fib(0) = 0
+    BEQ   FIB_BASE0     ; si N == 0 -> fib(0) = 0 ya esta en R2
 
 FIB_LOOP:
-    BEQ   FIB_DONE      ; si N == 1 -> fib(1) = 1 ya esta en R2
-
     ADD   R4, R0
     ADD   R4, R2
     ADD   R4, R3        ; R4 = a + b
@@ -97,7 +95,8 @@ FIB_LOOP:
     ADD   R3, R0
     ADD   R3, R4        ; b = R4 (nuevo b)
 
-    SUBI  R1, 1         ; N--
+    SUBI  R1, 1         ; N-- y Z = 1 si N era 1
+    BEQ   FIB_DONE      ; si N == 1 -> fib(1) = 1 ya esta en R2
     J     FIB_LOOP
 
 FIB_DONE:
@@ -159,7 +158,6 @@ FACT_DONE:
     BEQ   FIB_BASE0
 
 FIB_LOOP:
-    BEQ   FIB_DONE      ; si N == 1 -> fib(1) = 1 ya esta en R2
     ADD   R4, R0
     ADD   R4, R2
     ADD   R4, R3        ; R4 = a + b
@@ -170,7 +168,8 @@ FIB_LOOP:
     ADD   R3, R0
     ADD   R3, R4        ; b = R4
 
-    SUBI  R1, 1
+    SUBI  R1, 1         ; N-- y Z = 1 si N era 1
+    BEQ   FIB_DONE      ; si N == 1 -> fib(1) = 1 ya esta en R2
     J     FIB_LOOP
 
 FIB_DONE:

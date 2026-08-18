@@ -33,9 +33,6 @@ npm run dev
 
 Luego abre http://localhost:5173/. Otros comandos: npm run build, npm run preview, npm run test.
 
-## Estado
-
-Funcional y verificado: se instalo, compilo y ejecuto de punta a punta sin errores. Es de los proyectos mas solidos y didacticos del portafolio.
 
 ---
 

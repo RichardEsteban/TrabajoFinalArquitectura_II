@@ -7,13 +7,12 @@ Simulador didactico de la CPU UNI-16, una arquitectura RISC de 16 bits disenada 
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![Vitest](https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)
 
-11 commits
 
-## Captura (ejecucion real del simulador)
+
+## Captura del simulador)
 
 ![Captura del Simulador UNI-16 ejecutando el ejemplo Suma a+b](screenshots/simulador-uni16.png)
 
-Captura tomada corriendo el proyecto real: se compilo y ejecuto el ejemplo Suma (a + b) hasta HLT (CPU detenida, 6 ciclos).
 
 ## Sobre el proyecto
 
